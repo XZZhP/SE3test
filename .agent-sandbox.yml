@@ -1,0 +1,17 @@
+# .agent-sandbox.yml
+# Agent 沙箱执行环境配置
+
+image: python:3.11            # 必需：Docker 基础镜像
+working_dir: .                # 可选：命令执行目录，默认为仓库根目录
+
+install:                      # 可选：依赖安装命令
+  - pip install -r requirements.txt
+
+test:                         # 必需：测试命令列表
+  - pytest
+
+lint:                         # 可选：代码检查命令
+  - ruff check .
+
+timeout_seconds: 300          # 可选：单次命令超时（秒），默认 300
+allow_network: true         # 可选：是否允许容器联网，默认 false
