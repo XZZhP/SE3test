@@ -3,21 +3,27 @@ import heapq
 def dijkstra(graph, start):
     # graph: dict of dict, graph[node][neighbor] = weight
     
-    distances = {}
+    # 初始化所有节点距离为无穷大
+    distances = {node: float('inf') for node in graph}
     distances[start] = 0
     pq = [(0, start)]
     
     while pq:
         current_dist, current = heapq.heappop(pq)
         
+        # 如果当前节点已经处理过且距离更短，则跳过
+        if current_dist > distances.get(current, float('inf')):
+            continue
         
-        
-        for neighbor, weight in graph[current].items():
-           
-            distance = current_dist + 1  # 应为 current_dist + weight
+        # 检查当前节点是否在图中存在（避免KeyError）
+        if current not in graph:
+            continue
             
-           
-            if neighbor not in distances:
+        for neighbor, weight in graph[current].items():
+            distance = current_dist + weight
+            
+            # 只有找到更短路径时才更新
+            if distance < distances[neighbor]:
                 distances[neighbor] = distance
                 heapq.heappush(pq, (distance, neighbor))
                 
@@ -32,4 +38,3 @@ if __name__ == "__main__":
         'D': {'B': 10, 'C': 3}
     }
     print(dijkstra(graph, 'A'))
-   
