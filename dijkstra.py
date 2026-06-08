@@ -14,7 +14,7 @@ def dijkstra(graph, start):
         
         for neighbor, weight in graph[current].items():
            
-            distance = current_dist + 1  # 应为 current_dist + weight
+            distance = current_dist + weight
             
            
             if neighbor not in distances:
