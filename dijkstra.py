@@ -10,14 +10,15 @@ def dijkstra(graph, start):
     while pq:
         current_dist, current = heapq.heappop(pq)
         
-        
+        # Skip if we've already found a shorter path to this node
+        if current_dist > distances.get(current, float('inf')):
+            continue
         
         for neighbor, weight in graph[current].items():
-           
             distance = current_dist + weight
             
-           
-            if neighbor not in distances:
+            # Only consider this new path if it's better
+            if neighbor not in distances or distance < distances[neighbor]:
                 distances[neighbor] = distance
                 heapq.heappush(pq, (distance, neighbor))
                 
